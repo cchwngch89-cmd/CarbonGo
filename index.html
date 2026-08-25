@@ -1,813 +1,157 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CarbonGo</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f0f7f3;
-            color: #173b2b;
-        }
-
-        header {
-            background: #176b45;
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            margin: 0;
-        }
-
-        nav button {
-            background: transparent;
-            border: none;
-            color: white;
-            margin-left: 10px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .container {
-            max-width: 1150px;
-            margin: auto;
-            padding: 30px 20px;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        .welcome {
-            margin-bottom: 25px;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 18px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .number {
-            font-size: 32px;
-            font-weight: bold;
-            color: #176b45;
-            margin: 15px 0;
-        }
-
-        .chart {
-            background: white;
-            margin-top: 25px;
-            padding: 25px;
-            border-radius: 18px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .bar-row {
-            margin: 18px 0;
-        }
-
-        .bar {
-            height: 25px;
-            background: #55a878;
-            border-radius: 20px;
-            margin-top: 7px;
-        }
-
-        .form-card {
-            background: white;
-            padding: 30px;
-            border-radius: 18px;
-            max-width: 650px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        label {
-            display: block;
-            margin-top: 18px;
-            margin-bottom: 7px;
-            font-weight: bold;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        .primary {
-            background: #176b45;
-            color: white;
-            border: none;
-            padding: 14px 25px;
-            border-radius: 10px;
-            margin-top: 25px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .primary:hover {
-            background: #0d4d31;
-        }
-
-        .result {
-            margin-top: 25px;
-            padding: 20px;
-            background: #e1f3e8;
-            border-radius: 12px;
-            display: none;
-        }
-
-        .history-item {
-            background: white;
-            padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-        }
-
-        .tips {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-
-        @media (max-width: 850px) {
-
-            .cards {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .tips {
-                grid-template-columns: 1fr;
-            }
-
-            header {
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
-
-        @media (max-width: 500px) {
-
-            .cards {
-                grid-template-columns: 1fr;
-            }
-
-            nav button {
-                font-size: 13px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarbonGo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f0f7f3;color:#173b2b}
+header{background:#176b45;color:#fff;padding:16px 30px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+header h1{margin:0}
+nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+nav button,.auth-user button{background:transparent;border:0;color:#fff;cursor:pointer;font-size:15px;padding:8px}
+.container{max-width:1150px;margin:auto;padding:30px 20px}
+.page{display:none}.page.active{display:block}
+.welcome{margin-bottom:25px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card,.chart,.form-card,.history-item{background:#fff;border-radius:18px;box-shadow:0 5px 15px rgba(0,0,0,.08)}
+.card{padding:25px}.number{font-size:32px;font-weight:bold;color:#176b45;margin:15px 0}
+.chart{margin-top:25px;padding:25px}.bar-row{margin:18px 0}
+.bar{height:25px;background:#55a878;border-radius:20px;margin-top:7px}
+.form-card{padding:30px;max-width:650px}
+label{display:block;margin-top:18px;margin-bottom:7px;font-weight:bold}
+input,select{width:100%;padding:13px;border:1px solid #ccc;border-radius:8px;font-size:16px}
+.primary{background:#176b45;color:#fff;border:0;padding:14px 25px;border-radius:10px;margin-top:25px;cursor:pointer;font-size:16px}
+.primary:hover{background:#0d4d31}
+.secondary{background:#e1f3e8;color:#176b45;border:0;padding:12px 18px;border-radius:10px;cursor:pointer}
+.result{margin-top:25px;padding:20px;background:#e1f3e8;border-radius:12px;display:none}
+.history-item{padding:18px;margin-bottom:12px}
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+footer{text-align:center;padding:40px;color:#666}
+.auth-user{display:flex;align-items:center;gap:5px}
+#authStatus{font-size:14px;opacity:.9}
+.auth-modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:9999}
+.auth-modal.show{display:flex}
+.auth-box{background:#fff;width:min(430px,100%);border-radius:20px;padding:28px;box-shadow:0 15px 50px rgba(0,0,0,.25);position:relative}
+.auth-box h2{margin-top:0;color:#176b45}
+.auth-close{position:absolute;right:14px;top:10px;border:0;background:transparent;font-size:28px;cursor:pointer;color:#555}
+.auth-tabs{display:flex;gap:8px;margin-bottom:18px}
+.auth-tabs button{flex:1;border:0;padding:11px;border-radius:10px;cursor:pointer;background:#e1f3e8;color:#176b45;font-weight:bold}
+.auth-tabs button.active{background:#176b45;color:#fff}
+.auth-message{margin-top:14px;padding:11px;border-radius:10px;display:none;font-size:14px}
+.auth-message.error{display:block;background:#ffe8e8;color:#a22}
+.auth-message.success{display:block;background:#e1f3e8;color:#176b45}
+.auth-box .primary{width:100%}
+.link-btn{border:0;background:none;color:#176b45;text-decoration:underline;cursor:pointer;margin-top:12px}
+@media(max-width:850px){.cards{grid-template-columns:1fr 1fr}.tips{grid-template-columns:1fr}}
+@media(max-width:600px){.cards{grid-template-columns:1fr}header{padding:15px}.auth-user{width:100%;justify-content:flex-end}}
+</style>
 </head>
 
 <body>
-
 <header>
-
-    <h1>🌱 CarbonGo</h1>
-
-    <nav>
-        <button onclick="showPage('dashboard')">
-            Dashboard
-        </button>
-
-        <button onclick="showPage('calculator')">
-            คำนวณ
-        </button>
-
-        <button onclick="showPage('history')">
-            ประวัติ
-        </button>
-
-        <button onclick="showPage('tips')">
-            คำแนะนำ
-        </button>
-    </nav>
-
+  <h1>🌱 CarbonGo</h1>
+  <nav>
+    <button onclick="showPage('dashboard')">Dashboard</button>
+    <button onclick="showPage('calculator')">คำนวณ</button>
+    <button onclick="showPage('history')">ประวัติ</button>
+    <button onclick="showPage('tips')">คำแนะนำ</button>
+    <span id="authStatus">กำลังตรวจสอบ...</span>
+    <button id="loginButton" onclick="openAuth('login')">เข้าสู่ระบบ</button>
+    <button id="registerButton" onclick="openAuth('register')">สมัครสมาชิก</button>
+    <button id="logoutButton" onclick="logout()" style="display:none">ออกจากระบบ</button>
+  </nav>
 </header>
 
-
 <div class="container">
-
-
-    <!-- DASHBOARD -->
-
-    <section id="dashboard" class="page active">
-
-        <div class="welcome">
-
-            <h2>Dashboard</h2>
-
-            <p>
-                ติดตาม Carbon Footprint ของคุณ
-            </p>
-
-        </div>
-
-
-        <div class="cards">
-
-            <div class="card">
-
-                <h3>🌍 Carbon Footprint</h3>
-
-                <div
-                    class="number"
-                    id="totalCarbon">
-                    0
-                </div>
-
-                <p>kg CO₂</p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>🚗 การเดินทาง</h3>
-
-                <div
-                    class="number"
-                    id="transportCarbon">
-                    0
-                </div>
-
-                <p>kg CO₂</p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>⚡ พลังงาน</h3>
-
-                <div
-                    class="number"
-                    id="energyCarbon">
-                    0
-                </div>
-
-                <p>kg CO₂</p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>♻️ จำนวนกิจกรรม</h3>
-
-                <div
-                    class="number"
-                    id="activityCount">
-                    0
-                </div>
-
-                <p>รายการ</p>
-
-            </div>
-
-        </div>
-
-
-        <div class="chart">
-
-            <h2>📊 Carbon Footprint</h2>
-
-            <div class="bar-row">
-
-                <b>🚗 การเดินทาง</b>
-
-                <div
-                    class="bar"
-                    id="transportBar"
-                    style="width:0%">
-                </div>
-
-            </div>
-
-
-            <div class="bar-row">
-
-                <b>⚡ พลังงาน</b>
-
-                <div
-                    class="bar"
-                    id="energyBar"
-                    style="width:0%">
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- CALCULATOR -->
-
-    <section id="calculator" class="page">
-
-        <h2>🧮 คำนวณ Carbon Footprint</h2>
-
-        <div class="form-card">
-
-            <label>
-                ประเภทกิจกรรม
-            </label>
-
-            <select id="type">
-
-                <option value="transport">
-                    🚗 การเดินทาง
-                </option>
-
-                <option value="energy">
-                    ⚡ การใช้ไฟฟ้า
-                </option>
-
-            </select>
-
-
-            <label>
-                จำนวน
-            </label>
-
-            <input
-                type="number"
-                id="amount"
-                placeholder="เช่น 20">
-
-
-            <label>
-                หน่วย
-            </label>
-
-            <select id="unit">
-
-                <option value="km">
-                    กิโลเมตร
-                </option>
-
-                <option value="kwh">
-                    kWh
-                </option>
-
-            </select>
-
-
-            <button
-                class="primary"
-                onclick="calculate()">
-
-                คำนวณคาร์บอน
-
-            </button>
-
-
-            <div
-                class="result"
-                id="result">
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- HISTORY -->
-
-    <section id="history" class="page">
-
-        <h2>📋 ประวัติการคำนวณ</h2>
-
-        <div id="historyList">
-
-        </div>
-
-    </section>
-
-
-
-    <!-- TIPS -->
-
-    <section id="tips" class="page">
-
-        <h2>🌱 วิธีลด Carbon Footprint</h2>
-
-        <div class="tips">
-
-            <div class="card">
-
-                <h3>🚲 เดินทางสีเขียว</h3>
-
-                <p>
-                    ใช้จักรยาน เดิน
-                    หรือใช้ขนส่งสาธารณะ
-                    เมื่อสามารถทำได้
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>⚡ ประหยัดไฟ</h3>
-
-                <p>
-                    ปิดไฟและอุปกรณ์ไฟฟ้า
-                    เมื่อไม่ได้ใช้งาน
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>♻️ ลดขยะ</h3>
-
-                <p>
-                    ลดการใช้พลาสติก
-                    และแยกขยะเพื่อรีไซเคิล
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>🌳 เพิ่มพื้นที่สีเขียว</h3>
-
-                <p>
-                    ปลูกต้นไม้และดูแลพื้นที่สีเขียว
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>🥗 อาหาร</h3>
-
-                <p>
-                    ลดอาหารเหลือทิ้ง
-                    และเลือกอาหารที่มีผลกระทบต่อสิ่งแวดล้อมต่ำ
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>💧 ประหยัดน้ำ</h3>
-
-                <p>
-                    ใช้น้ำอย่างมีประสิทธิภาพ
-                    และลดการใช้น้ำโดยไม่จำเป็น
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
+<section id="dashboard" class="page active">
+  <div class="welcome">
+    <h2>Dashboard</h2>
+    <p>ติดตาม Carbon Footprint ของคุณ</p>
+  </div>
+  <div class="cards">
+    <div class="card"><h3>🌍 Carbon Footprint</h3><div class="number" id="totalCarbon">0</div><p>kg CO₂</p></div>
+    <div class="card"><h3>🚗 การเดินทาง</h3><div class="number" id="transportCarbon">0</div><p>kg CO₂</p></div>
+    <div class="card"><h3>⚡ พลังงาน</h3><div class="number" id="energyCarbon">0</div><p>kg CO₂</p></div>
+    <div class="card"><h3>♻️ จำนวนกิจกรรม</h3><div class="number" id="activityCount">0</div><p>รายการ</p></div>
+  </div>
+  <div class="chart">
+    <h2>📊 Carbon Footprint</h2>
+    <div class="bar-row"><b>🚗 การเดินทาง</b><div class="bar" id="transportBar" style="width:0%"></div></div>
+    <div class="bar-row"><b>⚡ พลังงาน</b><div class="bar" id="energyBar" style="width:0%"></div></div>
+  </div>
+</section>
+
+<section id="calculator" class="page">
+  <h2>🧮 คำนวณ Carbon Footprint</h2>
+  <div class="form-card">
+    <label>ประเภทกิจกรรม</label>
+    <select id="type">
+      <option value="transport">🚗 การเดินทาง</option>
+      <option value="energy">⚡ การใช้ไฟฟ้า</option>
+    </select>
+    <label>จำนวน</label>
+    <input type="number" id="amount" min="0" step="any" placeholder="เช่น 20">
+    <label>หน่วย</label>
+    <select id="unit">
+      <option value="km">กิโลเมตร</option>
+      <option value="kwh">kWh</option>
+    </select>
+    <button class="primary" onclick="calculate()">คำนวณคาร์บอน</button>
+    <div class="result" id="result"></div>
+  </div>
+</section>
+
+<section id="history" class="page">
+  <h2>📋 ประวัติการคำนวณ</h2>
+  <div id="historyList"></div>
+</section>
+
+<section id="tips" class="page">
+  <h2>🌱 วิธีลด Carbon Footprint</h2>
+  <div class="tips">
+    <div class="card"><h3>🚲 เดินทางสีเขียว</h3><p>ใช้จักรยาน เดิน หรือใช้ขนส่งสาธารณะเมื่อสามารถทำได้</p></div>
+    <div class="card"><h3>⚡ ประหยัดไฟ</h3><p>ปิดไฟและอุปกรณ์ไฟฟ้าเมื่อไม่ได้ใช้งาน</p></div>
+    <div class="card"><h3>♻️ ลดขยะ</h3><p>ลดการใช้พลาสติกและแยกขยะเพื่อรีไซเคิล</p></div>
+    <div class="card"><h3>🌳 เพิ่มพื้นที่สีเขียว</h3><p>ปลูกต้นไม้และดูแลพื้นที่สีเขียว</p></div>
+    <div class="card"><h3>🥗 อาหาร</h3><p>ลดอาหารเหลือทิ้งและเลือกอาหารที่มีผลกระทบต่อสิ่งแวดล้อมต่ำ</p></div>
+    <div class="card"><h3>💧 ประหยัดน้ำ</h3><p>ใช้น้ำอย่างมีประสิทธิภาพและลดการใช้น้ำโดยไม่จำเป็น</p></div>
+  </div>
+</section>
 </div>
 
+<footer><p>🌱 CarbonGo © 2026</p></footer>
+
+<!-- Login/Register modal -->
+<div class="auth-modal" id="authModal">
+  <div class="auth-box">
+    <button class="auth-close" onclick="closeAuth()">×</button>
+    <h2>🌱 CarbonGo</h2>
+    <div class="auth-tabs">
+      <button id="loginTab" onclick="setAuthMode('login')">เข้าสู่ระบบ</button>
+      <button id="registerTab" onclick="setAuthMode('register')">สมัครสมาชิก</button>
+    </div>
+
+    <div id="authForm">
+      <label>อีเมล</label>
+      <input type="email" id="authEmail" autocomplete="email" placeholder="example@email.com">
+      <label>รหัสผ่าน</label>
+      <input type="password" id="authPassword" autocomplete="current-password" placeholder="อย่างน้อย 6 ตัวอักษร">
+      <div id="confirmWrap">
+        <label>ยืนยันรหัสผ่าน</label>
+        <input type="password" id="authConfirm" autocomplete="new-password" placeholder="กรอกรหัสผ่านอีกครั้ง">
+      </div>
+      <button class="primary" id="authSubmit" onclick="submitAuth()">สมัครสมาชิก</button>
+      <button class="link-btn" id="resetButton" onclick="resetPassword()">ลืมรหัสผ่าน?</button>
+      <div id="authMessage" class="auth-message"></div>
+    </div>
+  </div>
+</div>
 
-<footer>
-
-    <p>
-        🌱 CarbonGo © 2026
-    </p>
-
-</footer>
-
-
-
-<script>
-
-    let historyData =
-        JSON.parse(
-            localStorage.getItem("carbonHistory")
-        ) || [];
-
-
-    function showPage(page) {
-
-        document
-            .querySelectorAll(".page")
-            .forEach(function(section) {
-
-                section.classList.remove("active");
-
-            });
-
-
-        document
-            .getElementById(page)
-            .classList.add("active");
-
-    }
-
-
-
-    function calculate() {
-
-        let type =
-            document.getElementById("type").value;
-
-        let amount =
-            Number(
-                document.getElementById("amount").value
-            );
-
-
-        if (!amount || amount < 0) {
-
-            alert("กรุณากรอกจำนวนให้ถูกต้อง");
-
-            return;
-
-        }
-
-
-        let carbon = 0;
-
-
-        /*
-            ตัวอย่างค่า Emission Factor
-
-            เดินทาง:
-            0.12 kg CO₂ / km
-
-            ไฟฟ้า:
-            0.50 kg CO₂ / kWh
-
-        */
-
-
-        if (type === "transport") {
-
-            carbon = amount * 0.12;
-
-        }
-
-
-        if (type === "energy") {
-
-            carbon = amount * 0.50;
-
-        }
-
-
-        carbon =
-            Number(
-                carbon.toFixed(2)
-            );
-
-
-        historyData.push({
-
-            type: type,
-
-            amount: amount,
-
-            carbon: carbon,
-
-            date:
-                new Date()
-                .toLocaleString("th-TH")
-
-        });
-
-
-        localStorage.setItem(
-
-            "carbonHistory",
-
-            JSON.stringify(historyData)
-
-        );
-
-
-        document
-            .getElementById("result")
-            .style.display = "block";
-
-
-        document
-            .getElementById("result")
-            .innerHTML =
-
-            "🌍 คุณปล่อยคาร์บอนประมาณ " +
-
-            "<strong>" +
-
-            carbon +
-
-            " kg CO₂</strong>";
-
-
-        updateDashboard();
-
-        showPage("dashboard");
-
-    }
-
-
-
-    function updateDashboard() {
-
-        let total = 0;
-
-        let transport = 0;
-
-        let energy = 0;
-
-
-        historyData.forEach(function(item) {
-
-            total += item.carbon;
-
-
-            if (item.type === "transport") {
-
-                transport += item.carbon;
-
-            }
-
-
-            if (item.type === "energy") {
-
-                energy += item.carbon;
-
-            }
-
-        });
-
-
-        document
-            .getElementById("totalCarbon")
-            .innerText =
-            total.toFixed(2);
-
-
-        document
-            .getElementById("transportCarbon")
-            .innerText =
-            transport.toFixed(2);
-
-
-        document
-            .getElementById("energyCarbon")
-            .innerText =
-            energy.toFixed(2);
-
-
-        document
-            .getElementById("activityCount")
-            .innerText =
-            historyData.length;
-
-
-        let max =
-            Math.max(
-                transport,
-                energy,
-                1
-            );
-
-
-        document
-            .getElementById("transportBar")
-            .style.width =
-            (transport / max * 100) + "%";
-
-
-        document
-            .getElementById("energyBar")
-            .style.width =
-            (energy / max * 100) + "%";
-
-
-        updateHistory();
-
-    }
-
-
-
-    function updateHistory() {
-
-        let list =
-            document.getElementById(
-                "historyList"
-            );
-
-
-        if (historyData.length === 0) {
-
-            list.innerHTML =
-                "<p>ยังไม่มีประวัติการคำนวณ</p>";
-
-            return;
-
-        }
-
-
-        list.innerHTML = "";
-
-
-        historyData
-            .slice()
-            .reverse()
-            .forEach(function(item) {
-
-                let name =
-                    item.type === "transport"
-                    ? "🚗 การเดินทาง"
-                    : "⚡ การใช้ไฟฟ้า";
-
-
-                list.innerHTML += `
-
-                    <div class="history-item">
-
-                        <strong>
-                            ${name}
-                        </strong>
-
-                        <p>
-                            จำนวน:
-                            ${item.amount}
-                        </p>
-
-                        <p>
-                            Carbon:
-                            <strong>
-                                ${item.carbon}
-                                kg CO₂
-                            </strong>
-                        </p>
-
-                        <small>
-                            ${item.date}
-                        </small>
-
-                    </div>
-
-                `;
-
-            });
-
-    }
-
-
-
-    updateDashboard();
-
-</script>
-<!-- CarbonGo Firebase Login -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
 <script>
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCINzcgwNsukV5sZyK5FKK8DusofSBDNz0",
   authDomain: "carbongo-3e063.firebaseapp.com",
@@ -819,8 +163,265 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
 const auth = firebase.auth();
+
+let authMode = "login";
+let currentUser = null;
+let historyData = [];
+
+function historyKey() {
+  return currentUser ? "carbonHistory_" + currentUser.uid : "carbonHistory_guest";
+}
+
+function loadHistory() {
+  historyData = JSON.parse(localStorage.getItem(historyKey()) || "[]");
+  updateDashboard();
+}
+
+function saveHistory() {
+  localStorage.setItem(historyKey(), JSON.stringify(historyData));
+}
+
+function showPage(page) {
+  document.querySelectorAll(".page").forEach(section => section.classList.remove("active"));
+  const target = document.getElementById(page);
+  if (target) target.classList.add("active");
+}
+
+function calculate() {
+  const type = document.getElementById("type").value;
+  const amount = Number(document.getElementById("amount").value);
+
+  if (!Number.isFinite(amount) || amount < 0) {
+    alert("กรุณากรอกจำนวนให้ถูกต้อง");
+    return;
+  }
+
+  if (type === "transport" && document.getElementById("unit").value !== "km") {
+    alert("การเดินทางใช้หน่วยกิโลเมตร (km)");
+    return;
+  }
+  if (type === "energy" && document.getElementById("unit").value !== "kwh") {
+    alert("การใช้ไฟฟ้าใช้หน่วย kWh");
+    return;
+  }
+
+  const carbon = Number((type === "transport" ? amount * 0.12 : amount * 0.50).toFixed(2));
+
+  historyData.push({
+    type,
+    amount,
+    carbon,
+    date: new Date().toLocaleString("th-TH")
+  });
+
+  saveHistory();
+
+  const result = document.getElementById("result");
+  result.style.display = "block";
+  result.innerHTML = "🌍 คุณปล่อยคาร์บอนประมาณ <strong>" + carbon + " kg CO₂</strong>";
+
+  updateDashboard();
+  showPage("dashboard");
+}
+
+function updateDashboard() {
+  let total = 0, transport = 0, energy = 0;
+
+  historyData.forEach(item => {
+    total += Number(item.carbon) || 0;
+    if (item.type === "transport") transport += Number(item.carbon) || 0;
+    if (item.type === "energy") energy += Number(item.carbon) || 0;
+  });
+
+  document.getElementById("totalCarbon").innerText = total.toFixed(2);
+  document.getElementById("transportCarbon").innerText = transport.toFixed(2);
+  document.getElementById("energyCarbon").innerText = energy.toFixed(2);
+  document.getElementById("activityCount").innerText = historyData.length;
+
+  const max = Math.max(transport, energy, 1);
+  document.getElementById("transportBar").style.width = (transport / max * 100) + "%";
+  document.getElementById("energyBar").style.width = (energy / max * 100) + "%";
+
+  updateHistory();
+}
+
+function updateHistory() {
+  const list = document.getElementById("historyList");
+
+  if (!historyData.length) {
+    list.innerHTML = "<p>ยังไม่มีประวัติการคำนวณ</p>";
+    return;
+  }
+
+  list.innerHTML = "";
+  historyData.slice().reverse().forEach(item => {
+    const name = item.type === "transport" ? "🚗 การเดินทาง" : "⚡ การใช้ไฟฟ้า";
+    const div = document.createElement("div");
+    div.className = "history-item";
+    div.innerHTML = `
+      <strong>${name}</strong>
+      <p>จำนวน: ${Number(item.amount)}</p>
+      <p>Carbon: <strong>${Number(item.carbon).toFixed(2)} kg CO₂</strong></p>
+      <small>${item.date}</small>
+    `;
+    list.appendChild(div);
+  });
+}
+
+/* ---------- Firebase Authentication ---------- */
+function openAuth(mode) {
+  setAuthMode(mode || "login");
+  document.getElementById("authModal").classList.add("show");
+  setTimeout(() => document.getElementById("authEmail").focus(), 50);
+}
+
+function closeAuth() {
+  document.getElementById("authModal").classList.remove("show");
+  clearAuthMessage();
+}
+
+function setAuthMode(mode) {
+  authMode = mode;
+  const login = mode === "login";
+
+  document.getElementById("loginTab").classList.toggle("active", login);
+  document.getElementById("registerTab").classList.toggle("active", !login);
+  document.getElementById("confirmWrap").style.display = login ? "none" : "block";
+  document.getElementById("authSubmit").innerText = login ? "เข้าสู่ระบบ" : "สมัครสมาชิก";
+  document.getElementById("resetButton").style.display = login ? "block" : "none";
+  clearAuthMessage();
+}
+
+function showAuthMessage(message, type) {
+  const box = document.getElementById("authMessage");
+  box.textContent = message;
+  box.className = "auth-message " + type;
+}
+
+function clearAuthMessage() {
+  const box = document.getElementById("authMessage");
+  box.textContent = "";
+  box.className = "auth-message";
+}
+
+function friendlyAuthError(error) {
+  const code = error && error.code ? error.code : "";
+  const messages = {
+    "auth/email-already-in-use": "อีเมลนี้ถูกสมัครสมาชิกแล้ว",
+    "auth/invalid-email": "รูปแบบอีเมลไม่ถูกต้อง",
+    "auth/weak-password": "รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร",
+    "auth/user-not-found": "ไม่พบบัญชีนี้",
+    "auth/wrong-password": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+    "auth/invalid-credential": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+    "auth/too-many-requests": "ลองมากเกินไป กรุณารอสักครู่แล้วลองใหม่",
+    "auth/network-request-failed": "เชื่อมต่ออินเทอร์เน็ตไม่สำเร็จ",
+    "auth/operation-not-allowed": "ยังไม่ได้เปิด Email/Password ใน Firebase Authentication"
+  };
+  return messages[code] || (error && error.message) || "เกิดข้อผิดพลาด กรุณาลองใหม่";
+}
+
+async function submitAuth() {
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+  const confirm = document.getElementById("authConfirm").value;
+
+  if (!email || !password) {
+    showAuthMessage("กรุณากรอกอีเมลและรหัสผ่าน", "error");
+    return;
+  }
+
+  if (authMode === "register") {
+    if (password.length < 6) {
+      showAuthMessage("รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร", "error");
+      return;
+    }
+    if (password !== confirm) {
+      showAuthMessage("รหัสผ่านทั้งสองช่องไม่ตรงกัน", "error");
+      return;
+    }
+  }
+
+  const button = document.getElementById("authSubmit");
+  button.disabled = true;
+  button.textContent = "กำลังดำเนินการ...";
+
+  try {
+    if (authMode === "register") {
+      await auth.createUserWithEmailAndPassword(email, password);
+      showAuthMessage("สมัครสมาชิกสำเร็จ กำลังเข้าสู่ระบบ...", "success");
+    } else {
+      await auth.signInWithEmailAndPassword(email, password);
+      showAuthMessage("เข้าสู่ระบบสำเร็จ", "success");
+    }
+
+    setTimeout(closeAuth, 700);
+  } catch (error) {
+    console.error(error);
+    showAuthMessage(friendlyAuthError(error), "error");
+  } finally {
+    button.disabled = false;
+    button.textContent = authMode === "login" ? "เข้าสู่ระบบ" : "สมัครสมาชิก";
+  }
+}
+
+async function resetPassword() {
+  const email = document.getElementById("authEmail").value.trim();
+
+  if (!email) {
+    showAuthMessage("กรุณากรอกอีเมลก่อนกดลืมรหัสผ่าน", "error");
+    return;
+  }
+
+  try {
+    await auth.sendPasswordResetEmail(email);
+    showAuthMessage("ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลแล้ว", "success");
+  } catch (error) {
+    console.error(error);
+    showAuthMessage(friendlyAuthError(error), "error");
+  }
+}
+
+async function logout() {
+  try {
+    await auth.signOut();
+  } catch (error) {
+    console.error(error);
+    alert("ออกจากระบบไม่สำเร็จ");
+  }
+}
+
+auth.onAuthStateChanged(user => {
+  currentUser = user;
+
+  const status = document.getElementById("authStatus");
+  const loginButton = document.getElementById("loginButton");
+  const registerButton = document.getElementById("registerButton");
+  const logoutButton = document.getElementById("logoutButton");
+
+  if (user) {
+    status.textContent = "👤 " + (user.email || "ผู้ใช้");
+    loginButton.style.display = "none";
+    registerButton.style.display = "none";
+    logoutButton.style.display = "inline-block";
+  } else {
+    status.textContent = "ยังไม่ได้เข้าสู่ระบบ";
+    loginButton.style.display = "inline-block";
+    registerButton.style.display = "inline-block";
+    logoutButton.style.display = "none";
+  }
+
+  loadHistory();
+});
+
+document.getElementById("authModal").addEventListener("click", event => {
+  if (event.target.id === "authModal") closeAuth();
+});
+
+document.getElementById("type").addEventListener("change", function() {
+  const unit = document.getElementById("unit");
+  unit.value = this.value === "transport" ? "km" : "kwh";
+});
 
 console.log("CarbonGo Firebase พร้อมใช้งาน");
 </script>
