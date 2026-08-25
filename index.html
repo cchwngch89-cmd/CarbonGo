@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarbonGo</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef7f1;
+            color: #173b2b;
+        }
+
+        header {
+            background: #176b45;
+            color: white;
+            padding: 25px 50px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #176b45;
+            margin: 15px 0;
+        }
+
+        button {
+            margin-top: 30px;
+            background: #176b45;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 800px) {
+            .cards {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🌱 CarbonGo</h1>
+    <p>Carbon Footprint Dashboard</p>
+</header>
+
+<div class="container">
+
+    <h2>Dashboard</h2>
+    <p>ติดตามและลดการปล่อยคาร์บอนของคุณ</p>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🌍 Carbon Footprint</h3>
+            <div class="number">125</div>
+            <p>kg CO₂ / เดือน</p>
+        </div>
+
+        <div class="card">
+            <h3>🚗 การเดินทาง</h3>
+            <div class="number">45</div>
+            <p>kg CO₂</p>
+        </div>
+
+        <div class="card">
+            <h3>⚡ พลังงาน</h3>
+            <div class="number">50</div>
+            <p>kg CO₂</p>
+        </div>
+
+        <div class="card">
+            <h3>♻️ ลดคาร์บอน</h3>
+            <div class="number">30</div>
+            <p>kg CO₂ ที่ลดได้</p>
+        </div>
+
+    </div>
+
+    <button onclick="calculateCarbon()">
+        คำนวณคาร์บอน
+    </button>
+
+</div>
+
+<script>
+function calculateCarbon() {
+
+    let distance = prompt(
+        "วันนี้คุณเดินทางกี่กิโลเมตร?"
+    );
+
+    if (distance === null) {
+        return;
+    }
+
+    distance = Number(distance);
+
+    if (isNaN(distance) || distance < 0) {
+        alert("กรุณากรอกตัวเลขให้ถูกต้อง");
+        return;
+    }
+
+    let carbon = distance * 0.12;
+
+    alert(
+        "คุณปล่อยคาร์บอนประมาณ " +
+        carbon.toFixed(2) +
+        " kg CO₂"
+    );
+}
+</script>
+
+</body>
+</html>
