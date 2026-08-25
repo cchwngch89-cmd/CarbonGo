@@ -802,6 +802,27 @@
     updateDashboard();
 
 </script>
+<!-- CarbonGo Firebase Login -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
+<script>
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCINzcgwNsukV5sZyK5FKK8DusofSBDNz0",
+  authDomain: "carbongo-3e063.firebaseapp.com",
+  projectId: "carbongo-3e063",
+  storageBucket: "carbongo-3e063.firebasestorage.app",
+  messagingSenderId: "620341223534",
+  appId: "1:620341223534:web:0c06f025ca6bfb8c77c67f",
+  measurementId: "G-L2J1YE6G6S"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+
+console.log("CarbonGo Firebase พร้อมใช้งาน");
+</script>
 </body>
 </html>
