@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CarbonGo</title>
 
     <style>
@@ -13,24 +14,48 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #eef7f1;
+            background: #f0f7f3;
             color: #173b2b;
         }
 
         header {
             background: #176b45;
             color: white;
-            padding: 25px 50px;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         header h1 {
             margin: 0;
         }
 
+        nav button {
+            background: transparent;
+            border: none;
+            color: white;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
         .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 20px;
+            max-width: 1150px;
+            margin: auto;
+            padding: 30px 20px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
         }
 
         .cards {
@@ -42,7 +67,7 @@
         .card {
             background: white;
             padding: 25px;
-            border-radius: 15px;
+            border-radius: 18px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
@@ -53,20 +78,116 @@
             margin: 15px 0;
         }
 
-        button {
-            margin-top: 30px;
+        .chart {
+            background: white;
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .bar-row {
+            margin: 18px 0;
+        }
+
+        .bar {
+            height: 25px;
+            background: #55a878;
+            border-radius: 20px;
+            margin-top: 7px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            max-width: 650px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .primary {
             background: #176b45;
             color: white;
             border: none;
             padding: 14px 25px;
             border-radius: 10px;
-            font-size: 16px;
+            margin-top: 25px;
             cursor: pointer;
+            font-size: 16px;
         }
 
-        @media (max-width: 800px) {
+        .primary:hover {
+            background: #0d4d31;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background: #e1f3e8;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .history-item {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .tips {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        @media (max-width: 850px) {
+
             .cards {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .tips {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            nav button {
+                font-size: 13px;
             }
         }
     </style>
@@ -75,75 +196,611 @@
 <body>
 
 <header>
+
     <h1>🌱 CarbonGo</h1>
-    <p>Carbon Footprint Dashboard</p>
+
+    <nav>
+        <button onclick="showPage('dashboard')">
+            Dashboard
+        </button>
+
+        <button onclick="showPage('calculator')">
+            คำนวณ
+        </button>
+
+        <button onclick="showPage('history')">
+            ประวัติ
+        </button>
+
+        <button onclick="showPage('tips')">
+            คำแนะนำ
+        </button>
+    </nav>
+
 </header>
+
 
 <div class="container">
 
-    <h2>Dashboard</h2>
-    <p>ติดตามและลดการปล่อยคาร์บอนของคุณ</p>
 
-    <div class="cards">
+    <!-- DASHBOARD -->
 
-        <div class="card">
-            <h3>🌍 Carbon Footprint</h3>
-            <div class="number">125</div>
-            <p>kg CO₂ / เดือน</p>
+    <section id="dashboard" class="page active">
+
+        <div class="welcome">
+
+            <h2>Dashboard</h2>
+
+            <p>
+                ติดตาม Carbon Footprint ของคุณ
+            </p>
+
         </div>
 
-        <div class="card">
-            <h3>🚗 การเดินทาง</h3>
-            <div class="number">45</div>
-            <p>kg CO₂</p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>🌍 Carbon Footprint</h3>
+
+                <div
+                    class="number"
+                    id="totalCarbon">
+                    0
+                </div>
+
+                <p>kg CO₂</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🚗 การเดินทาง</h3>
+
+                <div
+                    class="number"
+                    id="transportCarbon">
+                    0
+                </div>
+
+                <p>kg CO₂</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>⚡ พลังงาน</h3>
+
+                <div
+                    class="number"
+                    id="energyCarbon">
+                    0
+                </div>
+
+                <p>kg CO₂</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>♻️ จำนวนกิจกรรม</h3>
+
+                <div
+                    class="number"
+                    id="activityCount">
+                    0
+                </div>
+
+                <p>รายการ</p>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>⚡ พลังงาน</h3>
-            <div class="number">50</div>
-            <p>kg CO₂</p>
+
+        <div class="chart">
+
+            <h2>📊 Carbon Footprint</h2>
+
+            <div class="bar-row">
+
+                <b>🚗 การเดินทาง</b>
+
+                <div
+                    class="bar"
+                    id="transportBar"
+                    style="width:0%">
+                </div>
+
+            </div>
+
+
+            <div class="bar-row">
+
+                <b>⚡ พลังงาน</b>
+
+                <div
+                    class="bar"
+                    id="energyBar"
+                    style="width:0%">
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>♻️ ลดคาร์บอน</h3>
-            <div class="number">30</div>
-            <p>kg CO₂ ที่ลดได้</p>
+    </section>
+
+
+
+    <!-- CALCULATOR -->
+
+    <section id="calculator" class="page">
+
+        <h2>🧮 คำนวณ Carbon Footprint</h2>
+
+        <div class="form-card">
+
+            <label>
+                ประเภทกิจกรรม
+            </label>
+
+            <select id="type">
+
+                <option value="transport">
+                    🚗 การเดินทาง
+                </option>
+
+                <option value="energy">
+                    ⚡ การใช้ไฟฟ้า
+                </option>
+
+            </select>
+
+
+            <label>
+                จำนวน
+            </label>
+
+            <input
+                type="number"
+                id="amount"
+                placeholder="เช่น 20">
+
+
+            <label>
+                หน่วย
+            </label>
+
+            <select id="unit">
+
+                <option value="km">
+                    กิโลเมตร
+                </option>
+
+                <option value="kwh">
+                    kWh
+                </option>
+
+            </select>
+
+
+            <button
+                class="primary"
+                onclick="calculate()">
+
+                คำนวณคาร์บอน
+
+            </button>
+
+
+            <div
+                class="result"
+                id="result">
+
+            </div>
+
         </div>
 
-    </div>
+    </section>
 
-    <button onclick="calculateCarbon()">
-        คำนวณคาร์บอน
-    </button>
+
+
+    <!-- HISTORY -->
+
+    <section id="history" class="page">
+
+        <h2>📋 ประวัติการคำนวณ</h2>
+
+        <div id="historyList">
+
+        </div>
+
+    </section>
+
+
+
+    <!-- TIPS -->
+
+    <section id="tips" class="page">
+
+        <h2>🌱 วิธีลด Carbon Footprint</h2>
+
+        <div class="tips">
+
+            <div class="card">
+
+                <h3>🚲 เดินทางสีเขียว</h3>
+
+                <p>
+                    ใช้จักรยาน เดิน
+                    หรือใช้ขนส่งสาธารณะ
+                    เมื่อสามารถทำได้
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>⚡ ประหยัดไฟ</h3>
+
+                <p>
+                    ปิดไฟและอุปกรณ์ไฟฟ้า
+                    เมื่อไม่ได้ใช้งาน
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>♻️ ลดขยะ</h3>
+
+                <p>
+                    ลดการใช้พลาสติก
+                    และแยกขยะเพื่อรีไซเคิล
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🌳 เพิ่มพื้นที่สีเขียว</h3>
+
+                <p>
+                    ปลูกต้นไม้และดูแลพื้นที่สีเขียว
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🥗 อาหาร</h3>
+
+                <p>
+                    ลดอาหารเหลือทิ้ง
+                    และเลือกอาหารที่มีผลกระทบต่อสิ่งแวดล้อมต่ำ
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>💧 ประหยัดน้ำ</h3>
+
+                <p>
+                    ใช้น้ำอย่างมีประสิทธิภาพ
+                    และลดการใช้น้ำโดยไม่จำเป็น
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
 
+
+<footer>
+
+    <p>
+        🌱 CarbonGo © 2026
+    </p>
+
+</footer>
+
+
+
 <script>
-function calculateCarbon() {
 
-    let distance = prompt(
-        "วันนี้คุณเดินทางกี่กิโลเมตร?"
-    );
+    let historyData =
+        JSON.parse(
+            localStorage.getItem("carbonHistory")
+        ) || [];
 
-    if (distance === null) {
-        return;
+
+    function showPage(page) {
+
+        document
+            .querySelectorAll(".page")
+            .forEach(function(section) {
+
+                section.classList.remove("active");
+
+            });
+
+
+        document
+            .getElementById(page)
+            .classList.add("active");
+
     }
 
-    distance = Number(distance);
 
-    if (isNaN(distance) || distance < 0) {
-        alert("กรุณากรอกตัวเลขให้ถูกต้อง");
-        return;
+
+    function calculate() {
+
+        let type =
+            document.getElementById("type").value;
+
+        let amount =
+            Number(
+                document.getElementById("amount").value
+            );
+
+
+        if (!amount || amount < 0) {
+
+            alert("กรุณากรอกจำนวนให้ถูกต้อง");
+
+            return;
+
+        }
+
+
+        let carbon = 0;
+
+
+        /*
+            ตัวอย่างค่า Emission Factor
+
+            เดินทาง:
+            0.12 kg CO₂ / km
+
+            ไฟฟ้า:
+            0.50 kg CO₂ / kWh
+
+        */
+
+
+        if (type === "transport") {
+
+            carbon = amount * 0.12;
+
+        }
+
+
+        if (type === "energy") {
+
+            carbon = amount * 0.50;
+
+        }
+
+
+        carbon =
+            Number(
+                carbon.toFixed(2)
+            );
+
+
+        historyData.push({
+
+            type: type,
+
+            amount: amount,
+
+            carbon: carbon,
+
+            date:
+                new Date()
+                .toLocaleString("th-TH")
+
+        });
+
+
+        localStorage.setItem(
+
+            "carbonHistory",
+
+            JSON.stringify(historyData)
+
+        );
+
+
+        document
+            .getElementById("result")
+            .style.display = "block";
+
+
+        document
+            .getElementById("result")
+            .innerHTML =
+
+            "🌍 คุณปล่อยคาร์บอนประมาณ " +
+
+            "<strong>" +
+
+            carbon +
+
+            " kg CO₂</strong>";
+
+
+        updateDashboard();
+
+        showPage("dashboard");
+
     }
 
-    let carbon = distance * 0.12;
 
-    alert(
-        "คุณปล่อยคาร์บอนประมาณ " +
-        carbon.toFixed(2) +
-        " kg CO₂"
-    );
-}
+
+    function updateDashboard() {
+
+        let total = 0;
+
+        let transport = 0;
+
+        let energy = 0;
+
+
+        historyData.forEach(function(item) {
+
+            total += item.carbon;
+
+
+            if (item.type === "transport") {
+
+                transport += item.carbon;
+
+            }
+
+
+            if (item.type === "energy") {
+
+                energy += item.carbon;
+
+            }
+
+        });
+
+
+        document
+            .getElementById("totalCarbon")
+            .innerText =
+            total.toFixed(2);
+
+
+        document
+            .getElementById("transportCarbon")
+            .innerText =
+            transport.toFixed(2);
+
+
+        document
+            .getElementById("energyCarbon")
+            .innerText =
+            energy.toFixed(2);
+
+
+        document
+            .getElementById("activityCount")
+            .innerText =
+            historyData.length;
+
+
+        let max =
+            Math.max(
+                transport,
+                energy,
+                1
+            );
+
+
+        document
+            .getElementById("transportBar")
+            .style.width =
+            (transport / max * 100) + "%";
+
+
+        document
+            .getElementById("energyBar")
+            .style.width =
+            (energy / max * 100) + "%";
+
+
+        updateHistory();
+
+    }
+
+
+
+    function updateHistory() {
+
+        let list =
+            document.getElementById(
+                "historyList"
+            );
+
+
+        if (historyData.length === 0) {
+
+            list.innerHTML =
+                "<p>ยังไม่มีประวัติการคำนวณ</p>";
+
+            return;
+
+        }
+
+
+        list.innerHTML = "";
+
+
+        historyData
+            .slice()
+            .reverse()
+            .forEach(function(item) {
+
+                let name =
+                    item.type === "transport"
+                    ? "🚗 การเดินทาง"
+                    : "⚡ การใช้ไฟฟ้า";
+
+
+                list.innerHTML += `
+
+                    <div class="history-item">
+
+                        <strong>
+                            ${name}
+                        </strong>
+
+                        <p>
+                            จำนวน:
+                            ${item.amount}
+                        </p>
+
+                        <p>
+                            Carbon:
+                            <strong>
+                                ${item.carbon}
+                                kg CO₂
+                            </strong>
+                        </p>
+
+                        <small>
+                            ${item.date}
+                        </small>
+
+                    </div>
+
+                `;
+
+            });
+
+    }
+
+
+
+    updateDashboard();
+
 </script>
 
 </body>
